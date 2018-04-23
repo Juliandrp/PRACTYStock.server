@@ -14,7 +14,7 @@ class RolSeeder extends Seeder
         //
         $roles = [
             '0' => [
-                'desc' => 'Administrador'
+                'desc' => 'Supervisor'
             ],
             '1' => [
                 'desc' => 'Vendedor'

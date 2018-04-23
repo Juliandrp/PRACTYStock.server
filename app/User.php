@@ -15,7 +15,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'cedula', 
+        'email', 
+        'password',
+        'nombre_completo', 
+        'rol_id'
     ];
 
     /**
@@ -26,4 +30,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Relacion entre User y Rol
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class);
+    }
+
+    /**
+     * Relacion entre Usuario y Turno
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function turnos()
+    {
+       return $this->hasMany(Turno::class);
+    }
 }

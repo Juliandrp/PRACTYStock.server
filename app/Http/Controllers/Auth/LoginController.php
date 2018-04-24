@@ -28,8 +28,8 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        //return csrf_token();
-        return view('auth.login');
+        return csrf_token();
+        //return view('auth.login');
     }
 
     /**

@@ -22,6 +22,16 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        return csrf_token();
+    }
+
+    /**
      * Where to redirect users after login.
      *
      * @var string

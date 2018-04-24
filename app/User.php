@@ -48,4 +48,12 @@ class User extends Authenticatable
     {
        return $this->hasMany(Turno::class);
     }
+
+    /**
+     * Relacion Usuario y Bodega
+     */
+    public function bodega()
+    {
+        return $this->belongsTo(Bodega::class);
+    }
 }

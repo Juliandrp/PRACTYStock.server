@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Venta;
 
 class UsersController extends Controller
 {
@@ -84,14 +85,4 @@ class UsersController extends Controller
         //
     }
 
-    /**
-     * Retorna todas las ventas de un usuario especifico
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function ventasUsuario($id)
-    {
-        $venta = User::with('ventas')->get();
-    }
 }

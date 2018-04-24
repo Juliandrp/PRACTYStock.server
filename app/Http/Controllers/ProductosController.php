@@ -86,5 +86,5 @@ class ProductosController extends Controller
     public function destroy($id)
     {
         //
-    }
+    } 
 }

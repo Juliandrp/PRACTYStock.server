@@ -57,11 +57,4 @@ class User extends Authenticatable
         return $this->belongsTo(Bodega::class);
     }
 
-    /**
-     * Relacion entre Usuario y venta
-     */
-    public function ventas()
-    {
-        return $this->hasMany(Venta::class);
-    }
 }

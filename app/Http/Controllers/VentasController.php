@@ -75,6 +75,8 @@ class VentasController extends Controller
     public function show($id)
     {
         //
+        $ventas = Venta::where('user_id', '=', $id)->get();
+        return $ventas;
     }
 
     /**

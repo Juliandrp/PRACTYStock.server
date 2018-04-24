@@ -28,7 +28,8 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return csrf_token();
+        //return csrf_token();
+        return view('auth.login');
     }
 
     /**
@@ -38,7 +39,6 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
-
     /**
      * Create a new controller instance.
      *
@@ -47,6 +47,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $errors = [$this->username() => trans('auth.failed')];
+
+        if (!$request->expectsJson()) {
+            return response()->json($errors, 422);
+        }
+
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors);
     }
 
     protected function credentials(Request $request)
@@ -65,5 +84,21 @@ class LoginController extends Controller
     public function username()
     {
         return 'login';
+    }
+
+        /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+                ?: response()->json('credenciales correctas', 200);
     }
 }

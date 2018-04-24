@@ -17,7 +17,7 @@ class CreateVentasTable extends Migration
             $table->increments('id');
             $table->bigInteger('numero_factura');
             $table->integer('bodega_id');
-            $table->integer('comprador_id');
+            $table->integer('comprador_id')->nullable();
             $table->integer('producto_id');
             $table->integer('user_id');
             $table->timestamps();

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Venta;
+use App\Bodega;
+use App\User;
+use App\Comprador;
+use App\Producto;
 use Auth;
 class VentasController extends Controller
 {
@@ -14,10 +18,9 @@ class VentasController extends Controller
      */
     public function index()
     {
-        $user = Auth::user()->bodega;
-        return $user;
+        $ventas = Venta::all();
+        return $ventas;
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -37,11 +40,30 @@ class VentasController extends Controller
     public function store(Request $request)
     {
         $venta = new Venta;
-        $venta->numero_factura = $request->numero_factura;
-        $venta->bodega_id = Auth::user()->bodega->id;
-        $venta->producto_id = $request->producto_id;
-        $venta->user_id = Auth::user()->id;
-        $venta->save();
+        $venta->numero_factura = $request->numfactura;
+        $venta->bodega_id = Auth::user()->bodega->id;//Obtiene el ID de la bodega a la que pertenece el usuario logueado
+        $producto_id = Producto::where('imei', '=', $request->imei)->first();//Consulta los datos del producto por el IMEI
+
+        $venta->producto_id = $producto_id->id;//Obtiene el ID del producto obtenido en la consulta
+        $venta->user_id = Auth::user()->id; //Obtiene el ID del usuario logueado
+        $comprador = Comprador::where('cedula', '=', $request->cedula)->first();//Consulta si existe un comprador con la cedula encviada
+        if(!empty($comprador)){//Valida si existe ese comprador
+            $venta->comprador_id = $comprador->id;//Guarda el ID del comprador obtenido
+        }else{
+            $comprador_nuevo = new Comprador;//Crea una instancia del comprador
+            $comprador_nuevo->cedula = $request->cedula;
+            $comprador_nuevo->nombre_completo = $request->nombrecompleto;
+            $comprador_nuevo->telefono = $request->telefono;
+            $comprador_nuevo->email = $request->email;
+            $comprador_nuevo->direccion = $request->direccion;
+            $comprador_nuevo->barrio = $request->barrio;
+            $comprador_nuevo->ciudad = $request->ciudad;
+            $comprador_nuevo->departamento = $request->departamento;
+            $comprador_nuevo->save();
+        }
+        $comprador_id = Comprador::max('id');//Obtiene el ultimo ID guardado en la tabla comprador
+        $venta->comprador_id = $comprador_id;
+        $venta->save();//Guarda la venta
     }
 
     /**

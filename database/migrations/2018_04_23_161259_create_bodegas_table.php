@@ -17,7 +17,6 @@ class CreateBodegasTable extends Migration
             $table->increments('id');
             $table->string('nombre', 45);
             $table->string('direccion', 50);
-            $table->integer('user_id');
             $table->timestamps();
         });
     }

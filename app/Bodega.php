@@ -22,4 +22,12 @@ class Bodega extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    /**
+     * Relacion Bodega Usuarios
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

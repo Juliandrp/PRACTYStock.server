@@ -17,7 +17,7 @@ class CreateProductosTable extends Migration
             $table->increments('id');
             $table->string('marca', 15);
             $table->string('modelo', 20);
-            $table->string('imei', 15);
+            $table->bigInteger('imei');
             $table->string('iccid', 15);
             $table->string('msisdn', 15);
             $table->string('niu', 15);

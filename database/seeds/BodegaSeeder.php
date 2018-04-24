@@ -15,18 +15,15 @@ class BodegaSeeder extends Seeder
         $bodegas = [
             '0' => [
                 'nombre' => 'La 14 de Calima',
-                'direccion' => 'Cll 70 # 1A - 788',
-                'user_id' => 1
+                'direccion' => 'Cll 70 # 1A - 788'
             ],
             '1' => [
                 'nombre' => 'CC Chipichape',
-                'direccion' => 'Av 6N # 37 - 455',
-                'user_id' => 2
+                'direccion' => 'Av 6N # 37 - 455'
             ],
             '2' => [
                 'nombre' => 'Drogas la rebaja cetro',
-                'direccion' => 'Cll 15 # 21 - 45',
-                'user_id' => 3
+                'direccion' => 'Cll 15 # 21 - 45'
             ]
         ];
         DB::table('bodegas')->insert($bodegas);

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Producto;
+use Auth;
 
-class UsersController extends Controller
+class ProductosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +16,8 @@ class UsersController extends Controller
     public function index()
     {
         //
+        $productos = Producto::where('bodega_id', '=', Auth::user()->bodega->id)->get();
+        return $productos;
     }
 
     /**
@@ -46,8 +49,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return $user;
+        //
+        $producto = Producto::findOrFail($id);
+        return $producto;
     }
 
     /**
@@ -82,16 +86,5 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Retorna todas las ventas de un usuario especifico
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function ventasUsuario($id)
-    {
-        $venta = User::with('ventas')->get();
     }
 }

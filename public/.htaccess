@@ -21,4 +21,5 @@
     # Header Access
     Header add Access-Control-Allow-Origin "*"
     Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+    Header add Content-Type: "aplication/json"
 </IfModule>

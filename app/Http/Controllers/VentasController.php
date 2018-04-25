@@ -21,6 +21,7 @@ class VentasController extends Controller
         $ventas = Venta::all();
         return $ventas;
     }
+    
     /**
      * Show the form for creating a new resource.
      *

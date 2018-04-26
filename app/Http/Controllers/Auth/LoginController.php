@@ -28,8 +28,8 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return csrf_token();//Token de seguridad
-        //return view('auth.login');
+        //return csrf_token();//Token de seguridad
+        return view('auth.login');
     }
 
     /**
@@ -60,7 +60,7 @@ class LoginController extends Controller
         $errors = [$this->username() => trans('auth.failed')];
 
         if (!$request->expectsJson()) {
-            return response()->json($errors, 422);
+            return response()->json($errors, 200);
         }
 
         return redirect()->back()
@@ -86,7 +86,7 @@ class LoginController extends Controller
         return 'login';
     }
 
-        /**
+    /**
      * Send the response after the user was authenticated.
      *
      * @param  \Illuminate\Http\Request  $request

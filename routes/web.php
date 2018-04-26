@@ -15,7 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::group(['prefix' => 'api', 'middleware' => ['cors']], function(){
+    Auth::routes();
+});
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('usuario', 'UsersController');

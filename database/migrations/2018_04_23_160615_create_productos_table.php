@@ -15,8 +15,8 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('marca', 15);
-            $table->string('modelo', 20);
+            $table->integer('marca_id');
+            $table->integer('modelo_id');
             $table->bigInteger('imei');
             $table->string('iccid', 15);
             $table->string('msisdn', 15);

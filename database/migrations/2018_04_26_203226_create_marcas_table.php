@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVentasTable extends Migration
+class CreateMarcasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateVentasTable extends Migration
      */
     public function up()
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('marcas', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('numero_factura');
-            $table->decimal('precio_factura', 9, 3);
-            $table->integer('bodega_id');
-            $table->integer('comprador_id')->nullable();
-            $table->integer('producto_id');
-            $table->integer('user_id');
+            $table->string('nombre', 30);
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateVentasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('marcas');
     }
 }

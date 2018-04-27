@@ -42,18 +42,18 @@ class VentasController extends Controller
     {
         $venta = new Venta;
         $venta->numero_factura = $request->numfactura;
-        $venta->bodega_id = Auth::user()->bodega->id;//Obtiene el ID de la bodega a la que pertenece el usuario logueado
-        $producto_id = Producto::where('imei', '=', $request->imei)->first();//Consulta los datos del producto por el IMEI
-
+        $user = User::findOrFail($request->id_user);
+        $venta->id_user = $user->id;
+        $venta->bodega_id = $user->bodega_id;//Obtiene el ID de la bodega a la que pertenece el usuario logueado
+        $producto_id = Producto::where('imei', $request->imei)->first();//Consulta los datos del producto por el IMEI
         $venta->producto_id = $producto_id->id;//Obtiene el ID del producto obtenido en la consulta
-        $venta->user_id = Auth::user()->id; //Obtiene el ID del usuario logueado
         $comprador = Comprador::where('cedula', '=', $request->cedula)->first();//Consulta si existe un comprador con la cedula encviada
         if(!empty($comprador)){//Valida si existe ese comprador
             $venta->comprador_id = $comprador->id;//Guarda el ID del comprador obtenido
         }else{
             $comprador_nuevo = new Comprador;//Crea una instancia del comprador
             $comprador_nuevo->cedula = $request->cedula;
-            $comprador_nuevo->nombre_completo = $request->nombrecompleto;
+            $comprador_nuevo->nombre_completo = $request->nomcompleto;
             $comprador_nuevo->telefono = $request->telefono;
             $comprador_nuevo->email = $request->email;
             $comprador_nuevo->direccion = $request->direccion;
@@ -76,8 +76,10 @@ class VentasController extends Controller
     public function show($id)
     {
         //
-        $ventas = Venta::where('user_id', '=', $id)->get();
-        return $ventas;
+        $bodegas = Bodega::all();
+        $ventas = Venta::where('bodega_id', '=', $id)->with('producto', 'comprador')->paginate(1);
+        return view('estadisticas', compact('ventas', 'bodegas'));
+        
     }
 
     /**

@@ -3,24 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Producto;
-use App\User;
-use Auth;
+use App\Comprador;
 
-class ProductosController extends Controller
+class CompradoresController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         //
-        $user = User::where('id', $id)->with('bodega')->get();
-        //$bodega_id = $user->bodega->id;
-        //$productos = Producto::where()
-        return $user;
+        $compradores = Comprador::all();
+        return $compradores;
     }
 
     /**
@@ -50,15 +46,10 @@ class ProductosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cedula)
     {
-        //
-        // $producto = Producto::findOrFail($id);
-        // return $producto;
-        $user = User::where('id', $id)->with('bodega')->get();
-        $bodega_id = $user[0]['bodega']['id'];
-        $productos = Producto::where('bodega_id', $bodega_id)->with('marca', 'modelo')->get();
-        return response()->json($productos);
+        $comprador = Comprador::where('cedula', $cedula)->get();
+        return $comprador;
     }
 
     /**
@@ -93,5 +84,5 @@ class ProductosController extends Controller
     public function destroy($id)
     {
         //
-    } 
+    }
 }

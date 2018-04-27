@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -29,7 +30,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         //return csrf_token();//Token de seguridad
-        return view('auth.login');
+        return view('auth.login2');
     }
 
     /**
@@ -37,7 +38,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/load';
 
     /**
      * Create a new controller instance.
@@ -97,8 +98,10 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
-
+        $user = User::where('cedula', $request->login)->get();
         return $this->authenticated($request, $this->guard()->user())
-                ?: response()->json('credenciales correctas', 200);
+                ?: response()->json([
+                   $user[0]
+                ], 200);/*redirect()->intended($this->redirectPath());*/
     }
 }

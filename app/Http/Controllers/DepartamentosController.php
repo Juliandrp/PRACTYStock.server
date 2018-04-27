@@ -3,24 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Producto;
-use App\User;
-use Auth;
+use App\Departamento;
 
-class ProductosController extends Controller
+class DepartamentosController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         //
-        $user = User::where('id', $id)->with('bodega')->get();
-        //$bodega_id = $user->bodega->id;
-        //$productos = Producto::where()
-        return $user;
+        $departamentos = Departamento::with('municipios')->get();
+        return $departamentos;
     }
 
     /**
@@ -53,12 +49,8 @@ class ProductosController extends Controller
     public function show($id)
     {
         //
-        // $producto = Producto::findOrFail($id);
-        // return $producto;
-        $user = User::where('id', $id)->with('bodega')->get();
-        $bodega_id = $user[0]['bodega']['id'];
-        $productos = Producto::where('bodega_id', $bodega_id)->with('marca', 'modelo')->get();
-        return response()->json($productos);
+        $departamento = Departamento::where('id', $id)->with('municipios')->get();  
+        return $departamento;
     }
 
     /**
@@ -93,5 +85,5 @@ class ProductosController extends Controller
     public function destroy($id)
     {
         //
-    } 
+    }
 }

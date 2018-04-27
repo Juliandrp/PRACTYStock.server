@@ -27,4 +27,20 @@ class Producto extends Model
        return $this->belongsTo(Bodega::class);
     }
 
+    /**
+     * Relacion Producto Marca
+     */
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);    
+    }
+
+    /**
+     * Relacion Producto Modelo 
+     */
+    public function modelo()
+    {
+        return $this->belongsTo(Modelo::class);
+    }
+
 }
